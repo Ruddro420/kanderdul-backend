@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Modal } from "react-bootstrap";
-import Loader from '../components/Loader';
 
 const Category = () => {
     const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -91,7 +90,10 @@ const Category = () => {
         <div>
             {
                 loading ?
-                    <Loader /> :
+                    <div className="loader-container">
+                        <div className="spinner"></div>
+                        <p>Loading details...</p>
+                    </div> :
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Category</h1>
                         <ol class="breadcrumb mb-4">

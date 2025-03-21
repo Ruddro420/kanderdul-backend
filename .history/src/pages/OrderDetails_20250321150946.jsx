@@ -74,7 +74,7 @@ const OrderDetails = () => {
                                                     <td>{formatDate(item.updated_at)}</td>
                                                     <td>{item.status === 0 ? 'Pending' : 'Confirm'}</td>
                                                     <td>
-                                                        <Link to={`/single-order-details/${item.id}`}>
+                                                        <Link to={`/single-order-details/${item.order_id}`}>
                                                             <span className="material-symbols-outlined btn btn-primary btn-sm">visibility</span>
                                                         </Link>
                                                         <span className="material-symbols-outlined btn btn-success btn-sm ms-2">edit</span>

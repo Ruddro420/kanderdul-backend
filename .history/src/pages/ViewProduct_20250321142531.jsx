@@ -4,7 +4,7 @@ import Loader from '../components/Loader';
 
 const ViewProduct = () => {
     const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-    const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
+    const BASE_URL = import.meta.env.VITE_API_IMAGE_URL;
     const [getProduct, setGetProduct] = useState([]);
     const [loading, setLoading] = useState(true);
     // get category data
@@ -23,6 +23,8 @@ const ViewProduct = () => {
     useEffect(() => {
         getData()
     }, [])
+
+    console.log(getProduct);
 
     return (
         <div>
@@ -54,9 +56,9 @@ const ViewProduct = () => {
                                                 getProduct.map((item, i) => {
                                                     return (
                                                         <>
-                                                            <tr key={i}>
+                                                            <tr>
                                                                 <th scope="row">{i+1}</th>
-                                                                <td><img style={{height:'30px'}} src={`${IMAGE_URL}/admin/product/${item.product_image}`} alt="" /></td>
+                                                                <td><img src="https://cdn.rareblocks.xyz/collection/celebration/images/logo.svg" alt="" /></td>
                                                                 <td>{item.product_name}</td>
                                                                 <td>{item.select_category}</td>
                                                                 <td>{item.regular_price}</td>

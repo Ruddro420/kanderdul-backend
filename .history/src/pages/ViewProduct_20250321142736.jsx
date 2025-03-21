@@ -24,6 +24,8 @@ const ViewProduct = () => {
         getData()
     }, [])
 
+    console.log(getProduct);
+
     return (
         <div>
             {

@@ -24,6 +24,8 @@ const ViewProduct = () => {
         getData()
     }, [])
 
+    console.log(getProduct);
+
     return (
         <div>
             {
@@ -56,7 +58,7 @@ const ViewProduct = () => {
                                                         <>
                                                             <tr key={i}>
                                                                 <th scope="row">{i+1}</th>
-                                                                <td><img style={{height:'30px'}} src={`${IMAGE_URL}/admin/product/${item.product_image}`} alt="" /></td>
+                                                                <td><img src={`${IMAGE_URL}/admin/product/${item.product_image}`} alt="" /></td>
                                                                 <td>{item.product_name}</td>
                                                                 <td>{item.select_category}</td>
                                                                 <td>{item.regular_price}</td>

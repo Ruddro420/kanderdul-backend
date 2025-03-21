@@ -8,7 +8,6 @@ const AddProduct = () => {
     const BASE_URL = import.meta.env.VITE_API_BASE_URL;
     const [getCategory, setCategory] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [formData, setFormData] = useState({});
     // get category data
     const getData = () => {
         axios
@@ -26,25 +25,17 @@ const AddProduct = () => {
         getData()
     }, [])
     // add product
-    const handleChange = (event) => {
-        const { name, value, type, files } = event.target;
-
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: type === "file" ? files[0] : value, // Store file object instead of text
-        }));
-    };
-
     const submit = (e) => {
         e.preventDefault()
-       
-        const data = new FormData(); // Create FormData object
-        Object.entries(formData).forEach(([key, value]) => {
-            data.append(key, value);
-        });
-        console.log(formData);
+        let product_name = e.target[0].value;
+        let select_category = e.target[1].value;
+        let availability = e.target[2].value;
+        let regular_price = e.target[3].value;
+        let selling_price = e.target[4].value;
+        let product_description = e.target[5].value;
+        let product_image = e.target[6].value;
         axios
-            .post(`${BASE_URL}/product/add`,  data )
+            .post(`${BASE_URL}/product/add`, { product_name, select_category, availability, regular_price, selling_price, product_description, product_image })
             .then(function () {
                 getData()
                 setLoading(false)
@@ -72,11 +63,11 @@ const AddProduct = () => {
                                         <div className="row">
                                             <div class="col-lg-4 col-sm-12 col-md-4 mt-3 form-group">
                                                 <label className='mb-2'>Product Name</label>
-                                                <input name='product_name' onChange={handleChange} type="text" class="form-control" placeholder='Ex : Shampoo' />
+                                                <input name='product_name' type="text" class="form-control" placeholder='Ex : Shampoo' />
                                             </div>
                                             <div class="col-lg-4 col-sm-12 col-md-4 mt-3 form-group">
                                                 <label className='mb-2'>Product Category</label>
-                                                <select name="select_category" onChange={handleChange} class="form-control">
+                                                <select name="select_category" class="form-control">
                                                     <option value="">Select Category</option>
                                                     {
                                                         getCategory[0].map((item) => {
@@ -89,27 +80,27 @@ const AddProduct = () => {
                                             </div>
                                             <div class="col-lg-4 col-sm-12 col-md-4 mt-3 form-group">
                                                 <label className='mb-2'>Product Availability</label>
-                                                <select name="availability" onChange={handleChange}  class="form-control">
+                                                <select name="availability" class="form-control">
                                                     <option value="">Select Availability</option>
-                                                    <option value="In Stock">In Stock</option>
-                                                    <option value="Out of Stock">Out of Stock</option>
+                                                    <option value="Alu">In Stock</option>
+                                                    <option value="Alu">Out of Stock</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-6 col-sm-12 col-md-6 mt-3 form-group">
                                                 <label className='mb-2'>Regular Price</label>
-                                                <input name='regular_price' onChange={handleChange}  type="number" class="form-control" placeholder='Ex : 100' />
+                                                <input name='regular_price' type="number" class="form-control" placeholder='Ex : 100' />
                                             </div>
                                             <div class="col-lg-6 col-sm-12 col-md-6 mt-3 form-group">
                                                 <label className='mb-2'>Selling Price</label>
-                                                <input name='selling_price' type="number" onChange={handleChange}  class="form-control" placeholder='Ex : 80' />
+                                                <input name='selling_price' type="number" class="form-control" placeholder='Ex : 80' />
                                             </div>
                                             <div class="col-lg-12 col-sm-12 col-md-12 mt-3 form-group">
                                                 <label className='mb-2'>Product Description</label>
-                                                <textarea name="product_description" onChange={handleChange}  class="form-control"></textarea>
+                                                <textarea name="product_description" class="form-control"></textarea>
                                             </div>
                                             <div class="col-lg-12 col-sm-12 col-md-12 mt-3 form-group">
                                                 <label className='mb-2'>Product Image</label>
-                                                <input name='product_image' type="file" onChange={handleChange}  class="form-control" />
+                                                <input name='product_image' type="file" class="form-control" />
                                             </div>
                                             <button type="submit" class="btn btn-primary mt-3">Add Product</button>
                                         </div>

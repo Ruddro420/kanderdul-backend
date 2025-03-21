@@ -91,8 +91,8 @@ const AddProduct = () => {
                                                 <label className='mb-2'>Product Availability</label>
                                                 <select name="availability" onChange={handleChange}  class="form-control">
                                                     <option value="">Select Availability</option>
-                                                    <option value="In Stock">In Stock</option>
-                                                    <option value="Out of Stock">Out of Stock</option>
+                                                    <option value="Alu">In Stock</option>
+                                                    <option value="Alu">Out of Stock</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-6 col-sm-12 col-md-6 mt-3 form-group">
