@@ -82,8 +82,8 @@ const Analytics = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {currentOrders.length > 0 ? (
-                                                currentOrders.map((order) => (
+                                            {orders.length > 0 ? (
+                                                orders.map((order) => (
                                                     <tr key={order.id}>
                                                         <th scope="row">{order.order_id}</th>
                                                         <td>{order.name}</td>

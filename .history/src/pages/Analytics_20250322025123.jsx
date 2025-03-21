@@ -35,7 +35,7 @@ const Analytics = () => {
     // pagination
     const indexOfLastOrder = currentPage * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-    const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+    const currentOrders = order.slice(indexOfFirstOrder, indexOfLastOrder);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -82,8 +82,8 @@ const Analytics = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {currentOrders.length > 0 ? (
-                                                currentOrders.map((order) => (
+                                            {orders.length > 0 ? (
+                                                orders.map((order) => (
                                                     <tr key={order.id}>
                                                         <th scope="row">{order.order_id}</th>
                                                         <td>{order.name}</td>

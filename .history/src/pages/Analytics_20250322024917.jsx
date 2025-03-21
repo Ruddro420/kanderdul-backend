@@ -10,8 +10,6 @@ const Analytics = () => {
     const [toDate, setToDate] = useState("");
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const ordersPerPage = 5;
 
     const fetchOrders = async (e) => {
         e.preventDefault(); // Prevent form reload
@@ -31,13 +29,6 @@ const Analytics = () => {
             alert("Failed to fetch orders.");
         }
     };
-
-    // pagination
-    const indexOfLastOrder = currentPage * ordersPerPage;
-    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-    const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <div>
@@ -82,8 +73,8 @@ const Analytics = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {currentOrders.length > 0 ? (
-                                                currentOrders.map((order) => (
+                                            {orders.length > 0 ? (
+                                                orders.map((order) => (
                                                     <tr key={order.id}>
                                                         <th scope="row">{order.order_id}</th>
                                                         <td>{order.name}</td>
@@ -106,17 +97,6 @@ const Analytics = () => {
                                             )}
                                         </tbody>
                                     </table>
-                                    <nav>
-                                        <ul className="pagination">
-                                            {Array.from({ length: Math.ceil(orders.length / ordersPerPage) }, (_, i) => (
-                                                <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
-                                                    <button onClick={() => paginate(i + 1)} className="page-link">
-                                                        {i + 1}
-                                                    </button>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </nav>
                                 </div>
                             </div>
                         </div>
