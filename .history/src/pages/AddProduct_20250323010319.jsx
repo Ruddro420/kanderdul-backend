@@ -112,7 +112,7 @@ const AddProduct = () => {
                                             </div>
                                             <div class="col-lg-12 col-sm-12 col-md-12 mt-3 form-group">
                                                 <label className='mb-2'>Product Short Description</label>
-                                                <textarea name="product_short_description" onChange={handleChange}  class="form-control"></textarea>
+                                                <textarea name="product_description" onChange={handleChange}  class="form-control"></textarea>
                                             </div>
                                             <button type="submit" class="btn btn-primary mt-3">Add Product</button>
                                         </div>
