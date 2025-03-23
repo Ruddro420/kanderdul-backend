@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 
 const EditProduct = () => {
     const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+    const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
     const { id } = useParams(); // Get product ID from URL
 
     const [getCategory, setCategory] = useState([]);
@@ -17,7 +18,9 @@ const EditProduct = () => {
         regular_price: '',
         selling_price: '',
         product_description: '',
-        product_image: null, // Initialize as null for file input
+        p_short_des: '',
+        product_image: null,
+        image_gallary: [] // Store multiple images
     });
 
     // ✅ Fetch categories
@@ -33,9 +36,11 @@ const EditProduct = () => {
     useEffect(() => {
         axios.get(`${BASE_URL}/products/${id}`)
             .then((response) => {
+                const productData = response.data[0]; // Ensure correct indexing
                 setFormData({
-                    ...response.data[0],
-                    product_image: null, // Reset file input for the existing product
+                    ...productData,
+                    product_image: null, // Reset file input
+                    image_gallary: productData.image_gallary || [] // Ensure image gallery is an array
                 });
                 setLoading(false);
             })
@@ -46,16 +51,23 @@ const EditProduct = () => {
     const handleChange = (event) => {
         const { name, value, type, files } = event.target;
 
-        // Check if the input is of type file
         if (type === "file") {
-            setFormData((prevData) => ({
-                ...prevData,
-                [name]: files[0], // Store file object
-            }));
+            if (name === "image_gallary[]") {
+                // Handle multiple file selection
+                setFormData((prevData) => ({
+                    ...prevData,
+                    image_gallary: [...prevData.image_gallary, ...files] // Append new files
+                }));
+            } else {
+                setFormData((prevData) => ({
+                    ...prevData,
+                    [name]: files[0], // Store single file
+                }));
+            }
         } else {
             setFormData((prevData) => ({
                 ...prevData,
-                [name]: value, // Store text input values
+                [name]: value,
             }));
         }
     };
@@ -65,10 +77,16 @@ const EditProduct = () => {
         e.preventDefault();
         setLoading(true);
 
-        console.log(formData);
+        const data = new FormData();
+        Object.entries(formData).forEach(([key, value]) => {
+            if (key === "image_gallary") {
+                value.forEach((file) => data.append("image_gallary[]", file));
+            } else {
+                data.append(key, value);
+            }
+        });
 
-        // Ensure you are sending the correct endpoint and data
-        axios.post(`${BASE_URL}/product/update/${id}`, formData, {
+        axios.post(`${BASE_URL}/product/update/${id}`, data, {
             headers: { "Content-Type": "multipart/form-data" },
         })
             .then(() => {
@@ -81,6 +99,7 @@ const EditProduct = () => {
                 setLoading(false);
             });
     };
+
     return (
         <div>
             {loading ? <Loader /> : (
@@ -98,7 +117,6 @@ const EditProduct = () => {
                                             onChange={handleChange}
                                             type="text"
                                             className="form-control"
-
                                         />
                                     </div>
                                     <div className="col-lg-4 col-sm-12 col-md-4 mt-3 form-group">
@@ -108,7 +126,6 @@ const EditProduct = () => {
                                             value={formData.select_category || ""}
                                             onChange={handleChange}
                                             className="form-control"
-
                                         >
                                             <option value="">Select Category</option>
                                             {getCategory.map((item) => (
@@ -125,7 +142,6 @@ const EditProduct = () => {
                                             value={formData.availability || ""}
                                             onChange={handleChange}
                                             className="form-control"
-
                                         >
                                             <option value="">Select Availability</option>
                                             <option value="In Stock">In Stock</option>
@@ -140,7 +156,6 @@ const EditProduct = () => {
                                             onChange={handleChange}
                                             type="number"
                                             className="form-control"
-
                                         />
                                     </div>
                                     <div className="col-lg-6 col-sm-12 col-md-6 mt-3 form-group">
@@ -151,7 +166,6 @@ const EditProduct = () => {
                                             onChange={handleChange}
                                             type="number"
                                             className="form-control"
-
                                         />
                                     </div>
                                     <div className="col-lg-12 col-sm-12 col-md-12 mt-3 form-group">
@@ -161,7 +175,6 @@ const EditProduct = () => {
                                             value={formData.product_description || ""}
                                             onChange={handleChange}
                                             className="form-control"
-
                                         ></textarea>
                                     </div>
                                     <div className="col-lg-12 col-sm-12 col-md-12 mt-3 form-group">
@@ -171,6 +184,37 @@ const EditProduct = () => {
                                             type="file"
                                             onChange={handleChange}
                                             className="form-control"
+                                        />
+                                    </div>
+                                    <div className="col-lg-12 col-sm-12 col-md-12 mt-3 form-group">
+                                        <label className='mb-2'>Product Short Description</label>
+                                        <textarea
+                                            name="p_short_des"
+                                            value={formData.p_short_des || ""}
+                                            onChange={handleChange}
+                                            className="form-control"
+                                        ></textarea>
+                                    </div>
+                                    <div className="col-lg-12 col-sm-12 col-md-12 mt-3 form-group">
+                                        <label className='mb-2'>Image Gallery</label>
+                                        <div className="d-flex flex-wrap gap-2">
+                                            {formData.image_gallary.map((image, index) => (
+                                                <img
+                                                    key={index}
+                                                    src={`${IMAGE_URL}/admin/product/gallery/${image}`}
+                                                    alt="Gallery"
+                                                    className="img-thumbnail"
+                                                    style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                                                />
+                                            ))}
+                                        </div>
+                                        <input
+                                            name="image_gallary[]"
+                                            type="file"
+                                            multiple
+                                            accept="image/*"
+                                            onChange={handleChange}
+                                            className="form-control mt-2"
                                         />
                                     </div>
                                     <button type="submit" className="btn btn-primary mt-3">

@@ -152,13 +152,12 @@ const AddProduct = () => {
                                                 <label className='mb-2'>Select Size *(Add Size With Comma)*</label>
                                                 <input name='size' type="text" onChange={handleChange}  class="form-control" />
                                             </div>
-                                            <div class="col-lg-12 col-sm-12 col-md-4 mt-3 form-group">
+                                            <div class="col-lg-3 col-sm-12 col-md-4 mt-3 form-group">
                                                 <label className='mb-2'>Product Type</label>
-                                                <select name="type" onChange={handleChange}  class="form-control">
-                                                    <option value="">Select Type</option>
-                                                    <option value="Popular Products">Popular Products</option>
-                                                    <option value="New Arrival">New Arrival</option>
-                                                    <option value="Tranding Product">Tranding Product</option>
+                                                <select name="availability" onChange={handleChange}  class="form-control">
+                                                    <option value="">Select Availability</option>
+                                                    <option value="In Stock">In Stock</option>
+                                                    <option value="Out of Stock">Out of Stock</option>
                                                 </select>
                                             </div>
                                             <button type="submit" class="btn btn-primary mt-3">Add Product</button>

@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 const AddProduct = () => {
     const BASE_URL = import.meta.env.VITE_API_BASE_URL;
     const [getCategory, setCategory] = useState([]);
-    const [getSubCategory, setSubCategory] = useState([]);
     const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState({});
     // get category data
@@ -22,22 +21,9 @@ const AddProduct = () => {
                 console.log(error);
             });
     }
-    // get category data
-    const getSubData = () => {
-        axios
-            .get(`${BASE_URL}/products/sub-categories`)
-            .then((response) => {
-                setSubCategory(response.data);
-                setLoading(false)
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
     // call the function
     useEffect(() => {
         getData()
-        getSubData()
     }, [])
     // add product
     const handleChange = (event) => {
@@ -48,9 +34,6 @@ const AddProduct = () => {
             [name]: type === "file" ? files[0] : value, // Store file object instead of text
         }));
     };
-
-    console.log(getSubCategory);
-    
 
     const submit = (e) => {
         e.preventDefault()
@@ -86,11 +69,11 @@ const AddProduct = () => {
                                 <div className="col">
                                     <form onSubmit={submit}>
                                         <div className="row">
-                                            <div class="col-lg-3 col-sm-12 col-md-4 mt-3 form-group">
+                                            <div class="col-lg-4 col-sm-12 col-md-4 mt-3 form-group">
                                                 <label className='mb-2'>Product Name</label>
                                                 <input name='product_name' onChange={handleChange} type="text" class="form-control" placeholder='Ex : Shampoo' />
                                             </div>
-                                            <div class="col-lg-3 col-sm-12 col-md-4 mt-3 form-group">
+                                            <div class="col-lg-4 col-sm-12 col-md-4 mt-3 form-group">
                                                 <label className='mb-2'>Product Category</label>
                                                 <select name="select_category" onChange={handleChange} class="form-control">
                                                     <option value="">Select Category</option>
@@ -103,20 +86,7 @@ const AddProduct = () => {
                                                     }
                                                 </select>
                                             </div>
-                                            <div class="col-lg-3 col-sm-12 col-md-4 mt-3 form-group">
-                                                <label className='mb-2'>Product Sub Category</label>
-                                                <select name="select_sub_category" onChange={handleChange} class="form-control">
-                                                    <option value="">Select Sub Category</option>
-                                                    {
-                                                        getSubCategory[0]?.map((item) => {
-                                                            return (
-                                                                <option value={item.name}>{item.name}</option>
-                                                            )
-                                                        })
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-3 col-sm-12 col-md-4 mt-3 form-group">
+                                            <div class="col-lg-4 col-sm-12 col-md-4 mt-3 form-group">
                                                 <label className='mb-2'>Product Availability</label>
                                                 <select name="availability" onChange={handleChange}  class="form-control">
                                                     <option value="">Select Availability</option>
@@ -143,23 +113,6 @@ const AddProduct = () => {
                                             <div class="col-lg-12 col-sm-12 col-md-12 mt-3 form-group">
                                                 <label className='mb-2'>Product Short Description</label>
                                                 <textarea name="product_short_description" onChange={handleChange}  class="form-control"></textarea>
-                                            </div>
-                                            <div class="col-lg-12 col-sm-12 col-md-12 mt-3 form-group">
-                                                <label className='mb-2'>Select Color *(Add Color With Comma)*</label>
-                                                <input name='color' type="text" onChange={handleChange}  class="form-control" />
-                                            </div>
-                                            <div class="col-lg-12 col-sm-12 col-md-12 mt-3 form-group">
-                                                <label className='mb-2'>Select Size *(Add Size With Comma)*</label>
-                                                <input name='size' type="text" onChange={handleChange}  class="form-control" />
-                                            </div>
-                                            <div class="col-lg-12 col-sm-12 col-md-4 mt-3 form-group">
-                                                <label className='mb-2'>Product Type</label>
-                                                <select name="type" onChange={handleChange}  class="form-control">
-                                                    <option value="">Select Type</option>
-                                                    <option value="Popular Products">Popular Products</option>
-                                                    <option value="New Arrival">New Arrival</option>
-                                                    <option value="Tranding Product">Tranding Product</option>
-                                                </select>
                                             </div>
                                             <button type="submit" class="btn btn-primary mt-3">Add Product</button>
                                         </div>

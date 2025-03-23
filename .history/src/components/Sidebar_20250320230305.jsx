@@ -21,7 +21,6 @@ const Sidebar = () => {
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <Link to='/category' class="nav-link" href="layout-static.html">Category</Link>
-                                <Link to='/sub-category' class="nav-link" href="layout-static.html">Sub Category</Link>
                                 <Link to='/add-product' class="nav-link" href="layout-static.html">Add Product</Link>
                                 <Link to='/view-product' class="nav-link" href="layout-static.html">View Product</Link>
                             </nav>
