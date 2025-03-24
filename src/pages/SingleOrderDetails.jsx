@@ -104,6 +104,7 @@ const SingleOrderDetails = () => {
                         <th scope="col">Product Name</th>
                         <th scope="col">Category</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Color</th>
                         <th scope="col">Quantity</th>
                         {/*  <th scope="col">Action</th> */}
                       </tr>
@@ -117,6 +118,7 @@ const SingleOrderDetails = () => {
                               <td>{item.product_name}</td>
                               <td>{item.select_category}</td>
                               <td>{item.selling_price} TK</td>
+                              <td><div className="p-2 w-2" style={{ backgroundColor: item.selectedColor, height:"30px ", width:"30px", borderRadius:"5px"}}></div> </td>
                               <td>{item.quantity}</td>
                             </tr>
                           </>
