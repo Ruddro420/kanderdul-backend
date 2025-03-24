@@ -27,7 +27,7 @@ const SubCategory = () => {
     // get category data
     const getData = () => {
         axios
-            .get(`${BASE_URL}/products/categories`)
+            .get(`${BASE_URL}/products/sub-categories`)
             .then((response) => {
                 setCategory(response.data);
                 setLoading(false)
@@ -63,7 +63,7 @@ const SubCategory = () => {
     /* Delete Data */
     const deleteData = (id) => {
         axios
-            .delete(`${BASE_URL}/category/delete/${id}`)
+            .delete(`${BASE_URL}/sub-category/delete/${id}`)
             .then(function () {
                 toast.success('Delete Successfully');
                 getData()
@@ -79,7 +79,7 @@ const SubCategory = () => {
         e.preventDefault();
         setLoading(true);
         axios
-            .put(`${BASE_URL}/category/update/${dataId}`, { name: data }) // Send 'name' instead of 'data'
+            .put(`${BASE_URL}/sub-category/update/${dataId}`, { name: data }) // Send 'name' instead of 'data'
             .then(() => {
                 toast.success('Update Successfully');
                 getData();  // Refresh category list
@@ -131,7 +131,7 @@ const SubCategory = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* <h6>All Category</h6>
+                        <h6>All Sub Category</h6>
                         <div className="card">
                             <div className="card-body">
                                 <table className=" table">
@@ -163,10 +163,10 @@ const SubCategory = () => {
                                 </table>
 
                             </div>
-                        </div> */}
+                        </div>
                     </div>
             }
-            {/*            
+                       
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Modal Title</Modal.Title>
@@ -177,12 +177,6 @@ const SubCategory = () => {
                             <div className="row">
                                 <div className="col">
                                     <form onSubmit={updateSubmit}>
-                                        <div class="form-group">
-                                            <label className='mb-2'>Update Category</label>
-                                            <select name="select_category" id="">
-                                                <option value="Select Category">Select Category</option>
-                                            </select>
-                                        </div>
                                         <div class="form-group">
                                             <label className='mb-2'>Sub Category</label>
                                             <input
@@ -202,7 +196,7 @@ const SubCategory = () => {
                         </div>
                     </div>
                 </Modal.Body>
-            </Modal> */}
+            </Modal>
         </div>
     );
 };

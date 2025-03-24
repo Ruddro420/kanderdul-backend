@@ -10,6 +10,7 @@ const EditProduct = () => {
     const { id } = useParams(); // Get product ID from URL
 
     const [getCategory, setCategory] = useState([]);
+    const [getSubCategory, setSubCategory] = useState([]);
     const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState({
         product_name: '',
@@ -23,11 +24,21 @@ const EditProduct = () => {
         image_gallary: [] // Store multiple images
     });
 
-    // ✅ Fetch categories
+    // Fetch Categories
     useEffect(() => {
         axios.get(`${BASE_URL}/products/categories`)
             .then((response) => {
                 setCategory(response.data[0] || []);
+            })
+            .catch((error) => console.log(error));
+    }, []);
+
+
+    // ✅ Fetch Sub categories
+    useEffect(() => {
+        axios.get(`${BASE_URL}/products/sub-categories`)
+            .then((response) => {
+                setSubCategory(response.data[0] || []);
             })
             .catch((error) => console.log(error));
     }, []);
@@ -109,7 +120,7 @@ const EditProduct = () => {
                         <div className="card-body">
                             <form onSubmit={updateProduct}>
                                 <div className="row">
-                                    <div className="col-lg-4 col-sm-12 col-md-4 mt-3 form-group">
+                                    <div className="col-lg-3 col-sm-12 col-md-4 mt-3 form-group">
                                         <label className="mb-2">Product Name</label>
                                         <input
                                             name="product_name"
@@ -119,7 +130,7 @@ const EditProduct = () => {
                                             className="form-control"
                                         />
                                     </div>
-                                    <div className="col-lg-4 col-sm-12 col-md-4 mt-3 form-group">
+                                    <div className="col-lg-3 col-sm-12 col-md-4 mt-3 form-group">
                                         <label className="mb-2">Product Category</label>
                                         <select
                                             name="select_category"
@@ -135,7 +146,22 @@ const EditProduct = () => {
                                             ))}
                                         </select>
                                     </div>
-                                    <div className="col-lg-4 col-sm-12 col-md-4 mt-3 form-group">
+                                    <div class="col-lg-3 col-sm-12 col-md-4 mt-3 form-group">
+                                        <label className='mb-2'>Product Sub Category</label>
+                                        <select
+                                            value={formData.select_sub_category || ""}
+                                            name="select_sub_category" onChange={handleChange} class="form-control">
+                                            <option value="">Select Sub Category</option>
+                                            {
+                                                getSubCategory?.map((item) => {
+                                                    return (
+                                                        <option value={item.name}>{item.name}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                    <div className="col-lg-3 col-sm-12 col-md-4 mt-3 form-group">
                                         <label className="mb-2">Product Availability</label>
                                         <select
                                             name="availability"
@@ -176,6 +202,23 @@ const EditProduct = () => {
                                             onChange={handleChange}
                                             className="form-control"
                                         ></textarea>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-12 col-md-12 mt-3 form-group">
+                                        <label className='mb-2'>Select Color *(Add Color With Comma)*</label>
+                                        <input  value={formData.color || ""} name='color' type="text" onChange={handleChange} class="form-control" />
+                                    </div>
+                                    <div class="col-lg-4 col-sm-12 col-md-12 mt-3 form-group">
+                                        <label className='mb-2'>Select Size *(Add Size With Comma)*</label>
+                                        <input  value={formData.size || ""} name='size' type="text" onChange={handleChange} class="form-control" />
+                                    </div>
+                                    <div class="col-lg-4 col-sm-12 col-md-4 mt-3 form-group">
+                                        <label className='mb-2'>Product Type</label>
+                                        <select   value={formData.type || ""} name="type" onChange={handleChange} class="form-control">
+                                            <option value="">Select Type</option>
+                                            <option value="Popular Products">Popular Products</option>
+                                            <option value="New Arrival">New Arrival</option>
+                                            <option value="Tranding Product">Tranding Product</option>
+                                        </select>
                                     </div>
                                     <div className="col-lg-12 col-sm-12 col-md-12 mt-3 form-group">
                                         <label className="mb-2">Product Image</label>
