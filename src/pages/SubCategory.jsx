@@ -44,13 +44,12 @@ const SubCategory = () => {
     // add category
     const submit = (e) => {
         e.preventDefault()
-        let category = e.target[0].value;
-        let name = e.target[1].value;
+        let name = e.target[0].value;
 
         // console.log(category);
         
         axios
-            .post(`${BASE_URL}/sub-cat/add`, { select_category:category, name })
+            .post(`${BASE_URL}/sub-cat/add`, { name })
             .then(function () {
                 toast.success('Added Successfully');
                 getData()
@@ -109,28 +108,15 @@ const SubCategory = () => {
                 loading ?
                     <Loader /> :
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Category</h1>
+                        <h1 class="mt-4">Sub Category</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Add / View Category</li>
+                            <li class="breadcrumb-item active">Add / View Sub Category</li>
                         </ol>
                         <div className="card mb-5">
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col">
                                         <form onSubmit={submit}>
-                                            {/* <div class="form-group">
-                                                <label className='mb-2'>Product Category</label>
-                                                <select name="select_category" class="form-control">
-                                                    <option value="">Select Category</option>
-                                                    {
-                                                        getCategory[0].map((item) => {
-                                                            return (
-                                                                <option value={item.name}>{item.name}</option>
-                                                            )
-                                                        })
-                                                    }
-                                                </select>
-                                            </div> */}
                                             <div class="form-group mt-3">
                                                 <label className='mb-2'>Add Sub Category</label>
                                                 <input
