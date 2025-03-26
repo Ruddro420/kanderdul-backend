@@ -127,7 +127,7 @@ const AddProduct = () => {
                           class="form-control"
                         >
                           <option value="">Select Category</option>
-                          {getCategory[0].map((item) => {
+                          {getCategory[0]?.map((item) => {
                             return (
                               <option value={item.name}>{item.name}</option>
                             );
